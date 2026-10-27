@@ -1,5 +1,5 @@
-<resources>
-    <string name="app_name">Nimbus</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" tools:ignore="MissingTranslation">Nimbus</string>
 
     <!-- Actions -->
     <string name="action_search">Rechercher</string>
