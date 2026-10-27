@@ -1,3 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Actions -->
+    <string name="action_search">Search</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Weather screen -->
+    <string name="feels_like_min_max">Feels like %1$s · Low %2$s · High %3$s</string>
+    <string name="min_max">%1$s / %2$s</string>
+    <string name="detail_wind">Wind</string>
+    <string name="detail_humidity">Humidity</string>
+    <string name="hourly_title">Next 24 hours</string>
+    <string name="daily_title">Next 7 days</string>
+    <string name="last_updated">Updated %1$s</string>
+
+    <!-- Weather conditions (WMO codes) -->
+    <string name="weather_clear">Clear sky</string>
+    <string name="weather_mainly_clear">Mainly clear</string>
+    <string name="weather_partly_cloudy">Partly cloudy</string>
+    <string name="weather_overcast">Overcast</string>
+    <string name="weather_fog">Fog</string>
+    <string name="weather_drizzle">Drizzle</string>
+    <string name="weather_freezing_drizzle">Freezing drizzle</string>
+    <string name="weather_rain_light">Light rain</string>
+    <string name="weather_rain_moderate">Moderate rain</string>
+    <string name="weather_rain_heavy">Heavy rain</string>
+    <string name="weather_freezing_rain">Freezing rain</string>
+    <string name="weather_snow">Snow</string>
+    <string name="weather_snow_grains">Snow grains</string>
+    <string name="weather_rain_showers">Rain showers</string>
+    <string name="weather_snow_showers">Snow showers</string>
+    <string name="weather_thunderstorm">Thunderstorm</string>
+    <string name="weather_thunderstorm_hail">Thunderstorm with hail</string>
+    <string name="weather_unknown">Unknown conditions</string>
 </resources>

@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">Nimbus</string>
+
+    <!-- Actions -->
+    <string name="action_search">Rechercher</string>
+    <string name="action_settings">Réglages</string>
+
+    <!-- Écran météo -->
+    <string name="feels_like_min_max">Ressenti %1$s · Min %2$s · Max %3$s</string>
+    <string name="min_max">%1$s / %2$s</string>
+    <string name="detail_wind">Vent</string>
+    <string name="detail_humidity">Humidité</string>
+    <string name="hourly_title">Prochaines 24 h</string>
+    <string name="daily_title">7 prochains jours</string>
+    <string name="last_updated">Mis à jour %1$s</string>
+
+    <!-- Conditions météo (codes WMO) -->
+    <string name="weather_clear">Ciel dégagé</string>
+    <string name="weather_mainly_clear">Plutôt dégagé</string>
+    <string name="weather_partly_cloudy">Partiellement nuageux</string>
+    <string name="weather_overcast">Couvert</string>
+    <string name="weather_fog">Brouillard</string>
+    <string name="weather_drizzle">Bruine</string>
+    <string name="weather_freezing_drizzle">Bruine verglaçante</string>
+    <string name="weather_rain_light">Pluie faible</string>
+    <string name="weather_rain_moderate">Pluie modérée</string>
+    <string name="weather_rain_heavy">Pluie forte</string>
+    <string name="weather_freezing_rain">Pluie verglaçante</string>
+    <string name="weather_snow">Neige</string>
+    <string name="weather_snow_grains">Grains de neige</string>
+    <string name="weather_rain_showers">Averses</string>
+    <string name="weather_snow_showers">Averses de neige</string>
+    <string name="weather_thunderstorm">Orage</string>
+    <string name="weather_thunderstorm_hail">Orage avec grêle</string>
+    <string name="weather_unknown">Conditions inconnues</string>
 </resources>
