@@ -56,7 +56,7 @@ private fun HourlyItem(
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         Text(
-            text = hour.label,
+            text = if (hour.isNow) stringResource(R.string.now) else hour.label,
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )

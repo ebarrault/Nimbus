@@ -33,4 +33,27 @@
     <string name="weather_thunderstorm">Orage</string>
     <string name="weather_thunderstorm_hail">Orage avec grêle</string>
     <string name="weather_unknown">Conditions inconnues</string>
+
+    <!-- Libellés de temps -->
+    <string name="now">Maint.</string>
+    <string name="today">Aujourd’hui</string>
+    <string name="updated_just_now">à l’instant</string>
+    <plurals name="updated_minutes_ago">
+        <item quantity="one">il y a %d minute</item>
+        <item quantity="many">il y a %d minutes</item>
+        <item quantity="other">il y a %d minutes</item>
+    </plurals>
+    <plurals name="updated_hours_ago">
+        <item quantity="one">il y a %d heure</item>
+        <item quantity="many">il y a %d heures</item>
+        <item quantity="other">il y a %d heures</item>
+    </plurals>
+
+    <!-- États de l'écran -->
+    <string name="loading">Chargement</string>
+    <string name="retry">Réessayer</string>
+    <string name="error_network">Pas de connexion Internet. Vérifiez votre réseau puis réessayez.</string>
+    <string name="error_server">Le service météo ne répond pas pour le moment.</string>
+    <string name="error_parsing">Les données météo reçues sont illisibles.</string>
+    <string name="error_unknown">Une erreur inattendue est survenue.</string>
 </resources>

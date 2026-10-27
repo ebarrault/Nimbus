@@ -27,9 +27,11 @@ class HourlyRowTest {
     }
 
     @Test
-    fun afficheLeTitreEtLaPremiereHeure() {
+    fun afficheLeTitre_etMaintPourLaPremiereHeure() {
         composeTestRule.onNodeWithText(str(R.string.hourly_title)).assertIsDisplayed()
-        composeTestRule.onNodeWithText(sampleHourly.first().label).assertIsDisplayed()
+        composeTestRule.onNodeWithText(str(R.string.now)).assertIsDisplayed()
+        // l'heure de la première case est remplacée par "Maint."
+        composeTestRule.onNodeWithText(sampleHourly.first().label).assertDoesNotExist()
     }
 
     @Test

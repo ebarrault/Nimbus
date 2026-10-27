@@ -31,8 +31,9 @@ class DailyListTest {
     }
 
     @Test
-    fun afficheLesSeptJours() {
-        sampleDaily.forEach { day ->
+    fun afficheAujourdhui_puisLesSixJoursSuivants() {
+        composeTestRule.onNodeWithText(str(R.string.today)).assertIsDisplayed()
+        sampleDaily.filterNot { it.isToday }.forEach { day ->
             composeTestRule.onAllNodesWithText(day.dayLabel).assertCountEquals(1)
         }
     }

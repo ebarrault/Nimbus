@@ -59,9 +59,9 @@ private fun DailyItem(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = day.dayLabel,
+            text = if (day.isToday) stringResource(R.string.today) else day.dayLabel,
             style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.width(56.dp),
+            modifier = Modifier.width(96.dp),
         )
         WeatherIcon(condition = day.condition)
         Text(
