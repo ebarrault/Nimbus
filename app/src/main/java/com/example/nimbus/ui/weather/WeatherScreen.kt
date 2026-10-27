@@ -6,6 +6,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.List
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -47,6 +50,7 @@ import com.example.nimbus.ui.theme.NimbusTheme
 @Composable
 fun WeatherRoute(
     onSearchClick: () -> Unit = {},
+    onFavoritesClick: () -> Unit = {},
     onSettingsClick: () -> Unit = {},
     viewModel: WeatherViewModel = hiltViewModel(),
 ) {
@@ -56,7 +60,9 @@ fun WeatherRoute(
         onRetry = viewModel::onRetry,
         onRefresh = viewModel::onRefresh,
         onErrorShown = viewModel::onErrorShown,
+        onToggleFavorite = viewModel::onToggleFavorite,
         onSearchClick = onSearchClick,
+        onFavoritesClick = onFavoritesClick,
         onSettingsClick = onSettingsClick,
     )
 }
@@ -72,7 +78,9 @@ fun WeatherScreen(
     onRetry: () -> Unit,
     onRefresh: () -> Unit,
     onErrorShown: () -> Unit,
+    onToggleFavorite: () -> Unit,
     onSearchClick: () -> Unit,
+    onFavoritesClick: () -> Unit,
     onSettingsClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -91,8 +99,25 @@ fun WeatherScreen(
         modifier = modifier,
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(state.cityName) },
+                title = {
+                    Text(if (state.isCurrentLocation) stringResource(R.string.my_location) else state.cityName)
+                },
+                navigationIcon = {
+                    IconButton(onClick = onFavoritesClick) {
+                        Icon(Icons.AutoMirrored.Outlined.List, contentDescription = stringResource(R.string.favorites_title))
+                    }
+                },
                 actions = {
+                    if (!state.isCurrentLocation && state.cityName.isNotEmpty()) {
+                        IconButton(onClick = onToggleFavorite) {
+                            Icon(
+                                imageVector = if (state.isFavorite) Icons.Filled.Star else Icons.Outlined.StarBorder,
+                                contentDescription = stringResource(
+                                    if (state.isFavorite) R.string.action_remove_favorite else R.string.action_add_favorite,
+                                ),
+                            )
+                        }
+                    }
                     IconButton(onClick = onSearchClick) {
                         Icon(Icons.Outlined.Search, contentDescription = stringResource(R.string.action_search))
                     }
@@ -168,7 +193,7 @@ fun updatedAgoLabel(minutes: Long): String = when {
 @Composable
 private fun WeatherScreenPreview() {
     NimbusTheme {
-        WeatherScreen(sampleWeatherUiState, {}, {}, {}, {}, {})
+        WeatherScreen(sampleWeatherUiState, {}, {}, {}, {}, {}, {}, {})
     }
 }
 
@@ -176,6 +201,6 @@ private fun WeatherScreenPreview() {
 @Composable
 private fun WeatherScreenErrorPreview() {
     NimbusTheme {
-        WeatherScreen(WeatherUiState(cityName = "Paris", error = DataError.NETWORK), {}, {}, {}, {}, {})
+        WeatherScreen(WeatherUiState(cityName = "Paris", error = DataError.NETWORK), {}, {}, {}, {}, {}, {}, {})
     }
 }

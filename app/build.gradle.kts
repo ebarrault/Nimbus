@@ -54,6 +54,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
 
+    // Navigation entre écrans
+    implementation(libs.androidx.navigation.compose)
+
     // Injection de dépendances : Hilt (le compilateur passe par KSP)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)

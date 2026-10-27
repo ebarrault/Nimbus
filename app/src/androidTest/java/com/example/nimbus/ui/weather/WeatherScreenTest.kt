@@ -43,7 +43,9 @@ class WeatherScreenTest {
                     onRetry = { retryClicked = true },
                     onRefresh = {},
                     onErrorShown = { errorShown = true },
+                    onToggleFavorite = {},
                     onSearchClick = { searchClicked = true },
+                    onFavoritesClick = {},
                     onSettingsClick = { settingsClicked = true },
                 )
             }

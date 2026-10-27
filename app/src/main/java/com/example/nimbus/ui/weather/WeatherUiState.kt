@@ -26,6 +26,10 @@ data class DailyUi(
 /** Tout ce que l'écran météo affiche. C'est le WeatherViewModel qui le remplit. */
 data class WeatherUiState(
     val cityName: String = "",
+    /** La ville affichée est "Ma position" : l'écran affiche ce libellé à la place du nom. */
+    val isCurrentLocation: Boolean = false,
+    /** La ville affichée est dans les favoris (étoile pleine). */
+    val isFavorite: Boolean = false,
     val temperature: String = "",
     val condition: WeatherCondition = WeatherCondition.UNKNOWN,
     val feelsLike: String = "",

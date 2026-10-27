@@ -72,7 +72,7 @@ class WeatherViewModelTest {
     @Test
     fun derniereVilleVue_estPrioritaire() = runTest {
         cityRepository.favorites.value = listOf(pau, paris)
-        settingsRepository.setLastCityId(paris.id)
+        settingsRepository.setLastCity(paris)
 
         val viewModel = createViewModel()
 
@@ -85,7 +85,7 @@ class WeatherViewModelTest {
         cityRepository.favorites.value = listOf(paris, pau)
         val viewModel = createViewModel()
 
-        settingsRepository.setLastCityId(pau.id)
+        settingsRepository.setLastCity(pau)
 
         assertEquals("Pau", viewModel.uiState.value.cityName)
         assertEquals(listOf(paris, pau), weatherRepository.refreshCalls.map { it.city })

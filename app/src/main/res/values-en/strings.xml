@@ -54,4 +54,45 @@
     <string name="error_server">The weather service is not responding right now.</string>
     <string name="error_parsing">The weather data received could not be read.</string>
     <string name="error_unknown">Something went wrong.</string>
+
+    <!-- Navigation and common actions -->
+    <string name="action_back">Back</string>
+    <string name="action_clear">Clear</string>
+    <string name="action_add_favorite">Add to favorites</string>
+    <string name="action_remove_favorite">Remove from favorites</string>
+    <string name="my_location">My location</string>
+    <string name="locating">Locating…</string>
+
+    <!-- Search -->
+    <string name="search_title">Search for a city</string>
+    <string name="search_placeholder">City name</string>
+    <string name="search_hint">Type at least 2 letters.</string>
+    <string name="search_no_result">No city found for “%1$s”.</string>
+    <string name="location_permission_denied">Permission denied. You can still search for a city by name.</string>
+    <string name="location_disabled">Location is turned off on this phone.</string>
+    <string name="location_unavailable">Your location could not be found right now.</string>
+
+    <!-- Favorites -->
+    <string name="favorites_title">Favorites</string>
+    <string name="favorites_empty">No favorite cities yet. Add some from search with the star.</string>
+    <string name="favorite_deleted">%1$s removed from favorites</string>
+    <string name="undo">Undo</string>
+    <string name="move_up">Move %1$s up</string>
+    <string name="move_down">Move %1$s down</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_temperature">Temperature</string>
+    <string name="settings_wind">Wind speed</string>
+    <string name="settings_theme">Theme</string>
+    <string name="unit_celsius">Celsius (°C)</string>
+    <string name="unit_fahrenheit">Fahrenheit (°F)</string>
+    <string name="unit_kmh">Kilometers per hour (km/h)</string>
+    <string name="unit_ms">Meters per second (m/s)</string>
+    <string name="theme_system">System default</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="settings_about">About</string>
+    <string name="about_text">Weather data by Open-Meteo.com, licensed under CC BY 4.0.</string>
+    <string name="about_link">Visit open-meteo.com</string>
 </resources>

@@ -5,9 +5,9 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
-import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.example.nimbus.domain.model.City
 import com.example.nimbus.domain.model.Settings
 import com.example.nimbus.domain.model.TemperatureUnit
 import com.example.nimbus.domain.model.ThemeMode
@@ -16,6 +16,7 @@ import com.example.nimbus.domain.repository.SettingsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import kotlinx.serialization.json.Json
 import java.io.IOException
 
 /** Le fichier de réglages de l'app (une seule instance par application, garanti par "by"). */
@@ -35,7 +36,7 @@ class DataStoreSettingsRepository(
                 temperatureUnit = prefs[Keys.TEMPERATURE_UNIT].toEnumOr(TemperatureUnit.CELSIUS),
                 windSpeedUnit = prefs[Keys.WIND_SPEED_UNIT].toEnumOr(WindSpeedUnit.KMH),
                 themeMode = prefs[Keys.THEME_MODE].toEnumOr(ThemeMode.SYSTEM),
-                lastCityId = prefs[Keys.LAST_CITY_ID],
+                lastCity = prefs[Keys.LAST_CITY]?.let(::decodeCity),
             )
         }
 
@@ -51,17 +52,32 @@ class DataStoreSettingsRepository(
         dataStore.edit { it[Keys.THEME_MODE] = mode.name }
     }
 
-    override suspend fun setLastCityId(cityId: Long?) {
+    override suspend fun setLastCity(city: City?) {
         dataStore.edit { prefs ->
-            if (cityId == null) prefs.remove(Keys.LAST_CITY_ID) else prefs[Keys.LAST_CITY_ID] = cityId
+            if (city == null) {
+                prefs.remove(Keys.LAST_CITY)
+            } else {
+                prefs[Keys.LAST_CITY] = json.encodeToString(StoredCity.serializer(), city.toStored())
+            }
         }
+    }
+
+    /** Ville illisible (format d'une ancienne version…) : on l'ignore au lieu de planter. */
+    private fun decodeCity(value: String): City? = try {
+        json.decodeFromString(StoredCity.serializer(), value).toDomain()
+    } catch (e: Exception) {
+        null
     }
 
     private object Keys {
         val TEMPERATURE_UNIT = stringPreferencesKey("temperature_unit")
         val WIND_SPEED_UNIT = stringPreferencesKey("wind_speed_unit")
         val THEME_MODE = stringPreferencesKey("theme_mode")
-        val LAST_CITY_ID = longPreferencesKey("last_city_id")
+        val LAST_CITY = stringPreferencesKey("last_city")
+    }
+
+    private companion object {
+        val json = Json { ignoreUnknownKeys = true }
     }
 }
 

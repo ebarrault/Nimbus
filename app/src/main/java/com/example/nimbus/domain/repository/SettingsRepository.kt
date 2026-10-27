@@ -1,5 +1,6 @@
 package com.example.nimbus.domain.repository
 
+import com.example.nimbus.domain.model.City
 import com.example.nimbus.domain.model.Settings
 import com.example.nimbus.domain.model.TemperatureUnit
 import com.example.nimbus.domain.model.ThemeMode
@@ -11,5 +12,6 @@ interface SettingsRepository {
     suspend fun setTemperatureUnit(unit: TemperatureUnit)
     suspend fun setWindSpeedUnit(unit: WindSpeedUnit)
     suspend fun setThemeMode(mode: ThemeMode)
-    suspend fun setLastCityId(cityId: Long?)
+    /** Change la ville affichée sur l'écran météo. */
+    suspend fun setLastCity(city: City?)
 }

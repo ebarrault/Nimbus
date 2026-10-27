@@ -5,6 +5,7 @@ import com.example.nimbus.domain.model.Settings
 import com.example.nimbus.domain.model.TemperatureUnit
 import com.example.nimbus.domain.model.ThemeMode
 import com.example.nimbus.domain.model.WindSpeedUnit
+import com.example.nimbus.fakes.TestData
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
@@ -51,10 +52,10 @@ class DataStoreSettingsRepositoryTest {
     fun derniereVille_enregistreeEtEffacee() = runTest {
         val repository = createRepository()
 
-        repository.setLastCityId(2988507)
-        assertEquals(2988507L, repository.settings.first().lastCityId)
+        repository.setLastCity(TestData.pau)
+        assertEquals(TestData.pau, repository.settings.first().lastCity)
 
-        repository.setLastCityId(null)
-        assertNull(repository.settings.first().lastCityId)
+        repository.setLastCity(null)
+        assertNull(repository.settings.first().lastCity)
     }
 }

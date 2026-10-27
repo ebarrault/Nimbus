@@ -11,6 +11,9 @@ data class Settings(
     val temperatureUnit: TemperatureUnit = TemperatureUnit.CELSIUS,
     val windSpeedUnit: WindSpeedUnit = WindSpeedUnit.KMH,
     val themeMode: ThemeMode = ThemeMode.SYSTEM,
-    /** Dernière ville affichée, pour la rouvrir au lancement. */
-    val lastCityId: Long? = null,
+    /**
+     * Ville affichée sur l'écran météo (favori, ville cherchée ou "Ma position").
+     * Enregistrée pour être rouverte au prochain lancement.
+     */
+    val lastCity: City? = null,
 )

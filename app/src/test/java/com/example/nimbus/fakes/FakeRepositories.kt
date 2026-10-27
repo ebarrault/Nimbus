@@ -77,5 +77,5 @@ class FakeSettingsRepository(initial: Settings = Settings()) : SettingsRepositor
     override suspend fun setTemperatureUnit(unit: TemperatureUnit) = state.update { it.copy(temperatureUnit = unit) }
     override suspend fun setWindSpeedUnit(unit: WindSpeedUnit) = state.update { it.copy(windSpeedUnit = unit) }
     override suspend fun setThemeMode(mode: ThemeMode) = state.update { it.copy(themeMode = mode) }
-    override suspend fun setLastCityId(cityId: Long?) = state.update { it.copy(lastCityId = cityId) }
+    override suspend fun setLastCity(city: City?) = state.update { it.copy(lastCity = city) }
 }
