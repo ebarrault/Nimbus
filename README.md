@@ -22,3 +22,4 @@ Développer, avec Android Studio, un prototype fonctionnel de l'application :
 
 - [Cahier des charges](docs/CAHIER_DES_CHARGES.md)
 - [Architecture technique](docs/ARCHITECTURE.md)
+- [Sources et documentation utilisées](docs/SOURCES.md)
