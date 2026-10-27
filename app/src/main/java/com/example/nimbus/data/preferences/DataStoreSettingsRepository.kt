@@ -1,0 +1,70 @@
+package com.example.nimbus.data.preferences
+
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import com.example.nimbus.domain.model.Settings
+import com.example.nimbus.domain.model.TemperatureUnit
+import com.example.nimbus.domain.model.ThemeMode
+import com.example.nimbus.domain.model.WindSpeedUnit
+import com.example.nimbus.domain.repository.SettingsRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+import java.io.IOException
+
+/** Le fichier de réglages de l'app (une seule instance par application, garanti par "by"). */
+val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+
+class DataStoreSettingsRepository(
+    private val dataStore: DataStore<Preferences>,
+) : SettingsRepository {
+
+    override val settings: Flow<Settings> = dataStore.data
+        .catch { e ->
+            // Fichier illisible : on repart des valeurs par défaut plutôt que de planter.
+            if (e is IOException) emit(emptyPreferences()) else throw e
+        }
+        .map { prefs ->
+            Settings(
+                temperatureUnit = prefs[Keys.TEMPERATURE_UNIT].toEnumOr(TemperatureUnit.CELSIUS),
+                windSpeedUnit = prefs[Keys.WIND_SPEED_UNIT].toEnumOr(WindSpeedUnit.KMH),
+                themeMode = prefs[Keys.THEME_MODE].toEnumOr(ThemeMode.SYSTEM),
+                lastCityId = prefs[Keys.LAST_CITY_ID],
+            )
+        }
+
+    override suspend fun setTemperatureUnit(unit: TemperatureUnit) {
+        dataStore.edit { it[Keys.TEMPERATURE_UNIT] = unit.name }
+    }
+
+    override suspend fun setWindSpeedUnit(unit: WindSpeedUnit) {
+        dataStore.edit { it[Keys.WIND_SPEED_UNIT] = unit.name }
+    }
+
+    override suspend fun setThemeMode(mode: ThemeMode) {
+        dataStore.edit { it[Keys.THEME_MODE] = mode.name }
+    }
+
+    override suspend fun setLastCityId(cityId: Long?) {
+        dataStore.edit { prefs ->
+            if (cityId == null) prefs.remove(Keys.LAST_CITY_ID) else prefs[Keys.LAST_CITY_ID] = cityId
+        }
+    }
+
+    private object Keys {
+        val TEMPERATURE_UNIT = stringPreferencesKey("temperature_unit")
+        val WIND_SPEED_UNIT = stringPreferencesKey("wind_speed_unit")
+        val THEME_MODE = stringPreferencesKey("theme_mode")
+        val LAST_CITY_ID = longPreferencesKey("last_city_id")
+    }
+}
+
+/** Relit un enum enregistré par son nom ; valeur par défaut si absent ou inconnu. */
+private inline fun <reified T : Enum<T>> String?.toEnumOr(default: T): T =
+    enumValues<T>().firstOrNull { it.name == this } ?: default
