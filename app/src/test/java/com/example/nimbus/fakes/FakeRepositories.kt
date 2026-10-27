@@ -8,7 +8,9 @@ import com.example.nimbus.domain.model.TemperatureUnit
 import com.example.nimbus.domain.model.ThemeMode
 import com.example.nimbus.domain.model.Weather
 import com.example.nimbus.domain.model.WindSpeedUnit
+import com.example.nimbus.domain.model.LocationResult
 import com.example.nimbus.domain.repository.CityRepository
+import com.example.nimbus.domain.repository.LocationProvider
 import com.example.nimbus.domain.repository.SettingsRepository
 import com.example.nimbus.domain.repository.WeatherRepository
 import kotlinx.coroutines.flow.Flow
@@ -61,7 +63,14 @@ class FakeWeatherRepository : WeatherRepository {
 class FakeCityRepository : CityRepository {
     val favorites = MutableStateFlow<List<City>>(emptyList())
 
-    override suspend fun search(query: String): DataResult<List<City>> = DataResult.Success(emptyList())
+    /** Ce que renverra search(), et la liste des textes cherchés. */
+    var searchResult: DataResult<List<City>> = DataResult.Success(emptyList())
+    val searchQueries = mutableListOf<String>()
+
+    override suspend fun search(query: String): DataResult<List<City>> {
+        searchQueries += query
+        return searchResult
+    }
     override fun observeFavorites(): Flow<List<City>> = favorites
     override suspend fun addFavorite(city: City) = favorites.update { if (city in it) it else it + city }
     override suspend fun removeFavorite(cityId: Long) = favorites.update { list -> list.filterNot { it.id == cityId } }
@@ -78,4 +87,16 @@ class FakeSettingsRepository(initial: Settings = Settings()) : SettingsRepositor
     override suspend fun setWindSpeedUnit(unit: WindSpeedUnit) = state.update { it.copy(windSpeedUnit = unit) }
     override suspend fun setThemeMode(mode: ThemeMode) = state.update { it.copy(themeMode = mode) }
     override suspend fun setLastCity(city: City?) = state.update { it.copy(lastCity = city) }
+}
+
+class FakeLocationProvider(
+    var result: LocationResult = LocationResult.Success(latitude = 43.3, longitude = -0.36),
+) : LocationProvider {
+    var callCount = 0
+        private set
+
+    override suspend fun getCurrentLocation(): LocationResult {
+        callCount++
+        return result
+    }
 }

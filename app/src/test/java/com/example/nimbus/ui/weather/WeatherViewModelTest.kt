@@ -205,4 +205,53 @@ class WeatherViewModelTest {
         assertEquals(Settings().temperatureUnit, first.temperatureUnit)
         assertEquals(Settings().windSpeedUnit, first.windSpeedUnit)
     }
+
+    // --- Favoris et "Ma position" ---
+
+    @Test
+    fun villeChoisieHorsFavoris_estAffichee_sansEtoile() = runTest {
+        cityRepository.favorites.value = listOf(paris)
+        settingsRepository.setLastCity(pau)
+
+        val viewModel = createViewModel()
+
+        assertEquals("Pau", viewModel.uiState.value.cityName)
+        assertFalse(viewModel.uiState.value.isFavorite)
+    }
+
+    @Test
+    fun etoile_ajoutePuisRetireLaVilleAffichee() = runTest {
+        settingsRepository.setLastCity(pau)
+        val viewModel = createViewModel()
+
+        viewModel.onToggleFavorite()
+        assertTrue(viewModel.uiState.value.isFavorite)
+        assertEquals(listOf(pau), cityRepository.favorites.value)
+
+        viewModel.onToggleFavorite()
+        assertFalse(viewModel.uiState.value.isFavorite)
+    }
+
+    @Test
+    fun ajouterUnFavori_neRelancePasDAppelReseau() = runTest {
+        settingsRepository.setLastCity(pau)
+        val viewModel = createViewModel()
+
+        viewModel.onToggleFavorite()
+
+        assertEquals(1, weatherRepository.refreshCalls.size)
+    }
+
+    @Test
+    fun maPosition_estSignalee_etNePeutPasEtreEnFavori() = runTest {
+        val position = com.example.nimbus.domain.model.City(
+            com.example.nimbus.domain.model.City.CURRENT_LOCATION_ID, "", null, null, 43.3, -0.36, null,
+        )
+        settingsRepository.setLastCity(position)
+        val viewModel = createViewModel()
+
+        assertTrue(viewModel.uiState.value.isCurrentLocation)
+        viewModel.onToggleFavorite()
+        assertTrue(cityRepository.favorites.value.isEmpty())
+    }
 }
